@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Formulário de Dados do Requerente</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --c-bg: #F8F6F1;
+    --c-surface: #FFFFFF;
+    --c-border: #E2DDD4;
+    --c-border-focus: #8B7355;
+    --c-text: #1A1714;
+    --c-muted: #6B6560;
+    --c-accent: #5C4A2A;
+    --c-accent-light: #F0EAE0;
+    --c-accent-mid: #8B7355;
+    --c-success: #2D5A27;
+    --c-success-bg: #EAF2E8;
+    --c-error: #8B2020;
+    --c-error-bg: #F5E8E8;
+    --c-required: #A0522D;
+    --radius: 10px;
+    --radius-sm: 6px;
+    --shadow: 0 2px 16px rgba(0,0,0,0.07);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    background: var(--c-bg);
+    color: var(--c-text);
+    min-height: 100vh;
+    padding: 0 0 60px;
+  }
+
+  .header {
+    background: var(--c-accent);
+    color: #F8F6F1;
+    padding: 32px 24px 28px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .header::before {
+    content: '';
+    position: absolute;
+    top: -40px; right: -40px;
+    width: 160px; height: 160px;
+    border-radius: 50%;
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+
+  .header::after {
+    content: '';
+    position: absolute;
+    bottom: -30px; left: -30px;
+    width: 120px; height: 120px;
+    border-radius: 50%;
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .header-label {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(248,246,241,0.65);
+    margin-bottom: 8px;
+    font-weight: 500;
+  }
+
+  .header h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 26px;
+    font-weight: 400;
+    line-height: 1.25;
+    color: #F8F6F1;
+    margin-bottom: 6px;
+  }
+
+  .header p {
+    font-size: 13px;
+    color: rgba(248,246,241,0.7);
+    line-height: 1.5;
+    max-width: 360px;
+    margin: 0 auto;
+  }
+
+  .form-container {
+    max-width: 620px;
+    margin: 0 auto;
+    padding: 0 16px;
+  }
+
+  .section {
+    background: var(--c-surface);
+    border: 1px solid var(--c-border);
+    border-radius: var(--radius);
+    padding: 22px 20px;
+    margin-top: 16px;
+    box-shadow: var(--shadow);
+  }
+
+  .section-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 17px;
+    font-weight: 400;
+    color: var(--c-accent);
+    margin-bottom: 4px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .section-title svg {
+    width: 18px; height: 18px;
+    stroke: var(--c-accent-mid);
+    flex-shrink: 0;
+  }
+
+  .section-divider {
+    height: 1px;
+    background: var(--c-border);
+    margin: 12px 0 18px;
+  }
+
+  .field {
+    margin-bottom: 16px;
+  }
+
+  .field:last-child { margin-bottom: 0; }
+
+  label {
+    display: block;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--c-muted);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .required-mark {
+    color: var(--c-required);
+    margin-left: 2px;
+  }
+
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  input[type="date"],
+  textarea,
+  select {
+    width: 100%;
+    padding: 11px 14px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    color: var(--c-text);
+    background: var(--c-bg);
+    border: 1px solid var(--c-border);
+    border-radius: var(--radius-sm);
+    outline: none;
+    transition: border-color 0.15s, background 0.15s;
+    -webkit-appearance: none;
+    appearance: none;
+  }
+
+  input:focus, textarea:focus, select:focus {
+    border-color: var(--c-border-focus);
+    background: #FFFFFF;
+  }
+
+  input.error, textarea.error, select.error {
+    border-color: var(--c-error);
+    background: var(--c-error-bg);
+  }
+
+  textarea {
+    min-height: 90px;
+    resize: vertical;
+    line-height: 1.5;
+  }
+
+  select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%236B6560' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    padding-right: 36px;
+    cursor: pointer;
+  }
+
+  .row-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .row-2-3 {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 12px;
+  }
+
+  .consent-box {
+    background: var(--c-accent-light);
+    border: 1px solid #C8B898;
+    border-radius: var(--radius);
+    padding: 18px 18px 16px;
+    margin-top: 16px;
+  }
+
+  .consent-box p {
+    font-size: 13px;
+    line-height: 1.65;
+    color: var(--c-accent);
+    margin-bottom: 14px;
+  }
+
+  .consent-box strong { font-weight: 600; }
+
+  .checkbox-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    cursor: pointer;
+  }
+
+  .checkbox-row input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    min-width: 20px;
+    margin-top: 1px;
+    accent-color: var(--c-accent);
+    cursor: pointer;
+    background: white;
+    border: 1px solid var(--c-border);
+  }
+
+  .checkbox-row span {
+    font-size: 13.5px;
+    line-height: 1.55;
+    color: var(--c-accent);
+    font-weight: 500;
+  }
+
+  .btn-submit {
+    display: block;
+    width: 100%;
+    padding: 15px 24px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    color: #F8F6F1;
+    background: var(--c-accent);
+    border: none;
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition: background 0.15s, transform 0.1s;
+    margin-top: 20px;
+    box-shadow: 0 4px 14px rgba(92,74,42,0.25);
+  }
+
+  .btn-submit:hover { background: #4A3A1E; }
+  .btn-submit:active { transform: scale(0.99); }
+  .btn-submit:disabled {
+    background: #B0A898;
+    cursor: not-allowed;
+    box-shadow: none;
+    transform: none;
+  }
+
+  .field-hint {
+    font-size: 11.5px;
+    color: var(--c-muted);
+    margin-top: 4px;
+  }
+
+  .error-msg {
+    display: none;
+    font-size: 12px;
+    color: var(--c-error);
+    margin-top: 4px;
+  }
+
+  .error-msg.show { display: block; }
+
+  /* Toast / success overlay */
+  .toast {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.45);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+  }
+
+  .toast.show { display: flex; }
+
+  .toast-card {
+    background: white;
+    border-radius: 16px;
+    padding: 36px 28px;
+    text-align: center;
+    max-width: 340px;
+    width: 100%;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+  }
+
+  .toast-icon {
+    width: 56px; height: 56px;
+    background: var(--c-success-bg);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 16px;
+  }
+
+  .toast-icon svg {
+    width: 28px; height: 28px;
+    stroke: var(--c-success);
+  }
+
+  .toast-card h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 22px;
+    font-weight: 400;
+    color: var(--c-text);
+    margin-bottom: 10px;
+  }
+
+  .toast-card p {
+    font-size: 14px;
+    color: var(--c-muted);
+    line-height: 1.6;
+  }
+
+  .spinner {
+    display: none;
+    width: 18px; height: 18px;
+    border: 2px solid rgba(255,255,255,0.4);
+    border-top-color: white;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+    margin: 0 auto;
+  }
+
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .sending-label { display: block; }
+  .btn-submit.loading .sending-label { display: none; }
+  .btn-submit.loading .spinner { display: block; }
+
+  .privacy-footer {
+    text-align: center;
+    font-size: 12px;
+    color: var(--c-muted);
+    padding: 20px 24px 0;
+    line-height: 1.6;
+  }
+
+  .privacy-footer svg {
+    width: 13px; height: 13px;
+    stroke: var(--c-muted);
+    display: inline-block;
+    vertical-align: -2px;
+    margin-right: 4px;
+  }
+
+  @media (max-width: 480px) {
+    .header { padding: 28px 20px 24px; }
+    .header h1 { font-size: 22px; }
+    .row-2, .row-2-3 { grid-template-columns: 1fr; }
+    .section { padding: 18px 16px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <p class="header-label">Dados do Requerente</p>
+  <h1>Formulário de Informação</h1>
+  <p>Preencha os campos abaixo com os seus dados. A informação fornecida será utilizada exclusivamente no âmbito dos serviços contratados.</p>
+</div>
+
+<div class="form-container">
+
+  <!-- DADOS PESSOAIS -->
+  <div class="section">
+    <div class="section-title">
+      <svg fill="none" stroke-width="1.8" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      Dados Pessoais
+    </div>
+    <div class="section-divider"></div>
+
+    <div class="field">
+      <label>Nome Completo <span class="required-mark">*</span></label>
+      <input type="text" id="nome" placeholder="Primeiro e último nome" autocomplete="name">
+      <div class="error-msg" id="err-nome">Por favor, indique o seu nome completo.</div>
+    </div>
+
+    <div class="row-2">
+      <div class="field">
+        <label>Contacto Telefónico <span class="required-mark">*</span></label>
+        <input type="tel" id="telefone" placeholder="+351 9xx xxx xxx" autocomplete="tel">
+        <div class="error-msg" id="err-telefone">Número inválido.</div>
+      </div>
+      <div class="field">
+        <label>Email <span class="required-mark">*</span></label>
+        <input type="email" id="email" placeholder="email@exemplo.pt" autocomplete="email">
+        <div class="error-msg" id="err-email">Email inválido.</div>
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Morada <span class="required-mark">*</span></label>
+      <input type="text" id="morada" placeholder="Rua, número, andar" autocomplete="address-line1">
+    </div>
+
+    <div class="row-2-3">
+      <div class="field">
+        <label>Código Postal <span class="required-mark">*</span></label>
+        <input type="text" id="cp" placeholder="XXXX-XXX" maxlength="8" autocomplete="postal-code">
+        <div class="error-msg" id="err-cp">Formato: 1234-567</div>
+      </div>
+      <div class="field">
+        <label>Concelho <span class="required-mark">*</span></label>
+        <input type="text" id="concelho" placeholder="Concelho">
+      </div>
+    </div>
+  </div>
+
+  <!-- IDENTIFICAÇÃO -->
+  <div class="section">
+    <div class="section-title">
+      <svg fill="none" stroke-width="1.8" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20M7 15h.01M11 15h2"/></svg>
+      Identificação
+    </div>
+    <div class="section-divider"></div>
+
+    <div class="row-2">
+      <div class="field">
+        <label>Nº Cartão de Cidadão / Doc. ID</label>
+        <input type="text" id="docid" placeholder="Número do documento">
+        <div class="field-hint">Cartão de Cidadão, Passaporte ou outro</div>
+      </div>
+      <div class="field">
+        <label>Validade do Documento</label>
+        <input type="date" id="validade">
+      </div>
+    </div>
+  </div>
+
+  <!-- LOCAL DA OBRA -->
+  <div class="section">
+    <div class="section-title">
+      <svg fill="none" stroke-width="1.8" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      Local da Obra / Trabalho
+    </div>
+    <div class="section-divider"></div>
+
+    <div class="field">
+      <label>Morada da Obra <span class="required-mark">*</span></label>
+      <input type="text" id="morada-obra" placeholder="Rua, número, lugar">
+    </div>
+
+    <div class="row-2-3">
+      <div class="field">
+        <label>Código Postal da Obra</label>
+        <input type="text" id="cp-obra" placeholder="XXXX-XXX" maxlength="8">
+        <div class="error-msg" id="err-cp-obra">Formato: 1234-567</div>
+      </div>
+      <div class="field">
+        <label>Concelho da Obra</label>
+        <input type="text" id="concelho-obra" placeholder="Concelho">
+      </div>
+    </div>
+  </div>
+
+  <!-- OBSERVAÇÕES -->
+  <div class="section">
+    <div class="section-title">
+      <svg fill="none" stroke-width="1.8" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+      Outros Dados e Observações
+    </div>
+    <div class="section-divider"></div>
+
+    <div class="field">
+      <label>Informação Adicional</label>
+      <textarea id="observacoes" placeholder="Indique aqui qualquer outra informação relevante, particularidades do pedido, referências ou notas adicionais..."></textarea>
+    </div>
+  </div>
+
+  <!-- CONSENTIMENTO -->
+  <div class="consent-box">
+    <p>
+      <strong>Proteção de Dados e Privacidade</strong><br>
+      Os dados pessoais recolhidos neste formulário destinam-se <strong>exclusivamente</strong> à instrução do processo ou à prestação dos serviços que está a contratar. Não serão partilhados com terceiros sem o seu consentimento expresso, sendo tratados em conformidade com o Regulamento Geral sobre a Proteção de Dados (RGPD).
+    </p>
+    <label class="checkbox-row" for="consentimento">
+      <input type="checkbox" id="consentimento">
+      <span>Declaro que li, compreendi e aceito que os dados fornecidos se destinam exclusivamente à utilização no processo ou prestação de serviços que estou a contratar, conforme indicado acima. <span class="required-mark">*</span></span>
+    </label>
+    <div class="error-msg" id="err-consentimento">É necessário confirmar o consentimento para submeter o formulário.</div>
+  </div>
+
+  <button class="btn-submit" id="btn-submit" type="button" onclick="submitForm()">
+    <span class="sending-label">Enviar Informação</span>
+    <div class="spinner"></div>
+  </button>
+
+  <p class="privacy-footer">
+    <svg fill="none" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+    Dados protegidos e tratados de acordo com o RGPD.
+  </p>
+
+</div>
+
+<!-- SUCCESS TOAST -->
+<div class="toast" id="toast">
+  <div class="toast-card">
+    <div class="toast-icon">
+      <svg fill="none" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+    </div>
+    <h2>Informação enviada!</h2>
+    <p>Obrigado pelos seus dados. Em breve receberá uma confirmação no seu email. Entraremos em contacto brevemente.</p>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script>
+  // ─────────────────────────────────────────────
+  // CONFIGURAÇÃO EMAILJS
+  // 1. Crie conta gratuita em https://emailjs.com
+  // 2. Adicione um serviço de email (Gmail, Outlook, etc.)
+  // 3. Crie dois templates: um para o cliente, outro de alerta para si
+  // 4. Substitua os valores abaixo pelos seus
+  // ─────────────────────────────────────────────
+  const EMAILJS_PUBLIC_KEY  = "PRtALVDHtaYf8ledu";
+  const EMAILJS_SERVICE_ID  = "service_0p1kwx2";
+  const TEMPLATE_CLIENTE    = "";                  // Template A — desactivado
+  const TEMPLATE_ALERTA     = "template_ht4fc0u";  // Template B — alerta ao arquitecto
+  const MEU_EMAIL           = "arqdavidefalca@gmail.com";
+
+  (function() {
+    if (typeof emailjs !== 'undefined' && EMAILJS_PUBLIC_KEY !== "SEU_PUBLIC_KEY_AQUI") {
+      emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
+    }
+  })();
+
+  function val(id) { return document.getElementById(id)?.value?.trim() || ''; }
+  function setError(id, show) {
+    const el = document.getElementById('err-' + id);
+    if (el) el.classList.toggle('show', show);
+    const input = document.getElementById(id);
+    if (input) input.classList.toggle('error', show);
+  }
+
+  function validarCP(cp) {
+    return /^\d{4}-\d{3}$/.test(cp.replace(/\s/g, ''));
+  }
+
+  function submitForm() {
+    let valid = true;
+
+    // Campos obrigatórios
+    ['nome', 'telefone', 'morada', 'cp', 'concelho', 'morada-obra'].forEach(id => {
+      const v = val(id);
+      if (!v) { setError(id.replace('-', ''), true); valid = false; }
+      else setError(id.replace('-', ''), false);
+    });
+
+    // Email
+    const email = val('email');
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      setError('email', true); valid = false;
+    } else setError('email', false);
+
+    // Código postal requerente (obrigatório + formato)
+    const cp = val('cp');
+    if (!cp) { setError('cp', true); valid = false; }
+    else if (!validarCP(cp)) { setError('cp', true); valid = false; }
+    else setError('cp', false);
+
+    // Código postal obra (opcional — só valida formato se preenchido)
+    const cpObra = val('cp-obra');
+    if (cpObra && !validarCP(cpObra)) { setError('cpora', true); valid = false; }
+    else setError('cpora', false);
+
+    // Consentimento — OBRIGATÓRIO
+    const consent = document.getElementById('consentimento').checked;
+    if (!consent) { setError('consentimento', true); valid = false; }
+    else setError('consentimento', false);
+
+    if (!valid) {
+      document.querySelector('.error-msg.show')?.closest('.section, .consent-box')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return;
+    }
+
+    // Recolher dados
+    const dados = {
+      nome:          val('nome'),
+      telefone:      val('telefone'),
+      email:         val('email'),
+      morada:        val('morada'),
+      cp:            val('cp'),
+      concelho:      val('concelho'),
+      doc_id:        val('docid') || 'Não indicado',
+      doc_validade:  val('validade') ? formatarData(val('validade')) : 'Não indicado',
+      morada_obra:   val('morada-obra'),
+      cp_obra:       val('cp-obra'),
+      concelho_obra: val('concelho-obra'),
+      observacoes:   val('observacoes') || 'Sem observações',
+      data_submissao: new Date().toLocaleString('pt-PT', { dateStyle: 'long', timeStyle: 'short' }),
+      to_email:      val('email'),
+      reply_to:      MEU_EMAIL,
+      alerta_email:  MEU_EMAIL
+    };
+
+    const btn = document.getElementById('btn-submit');
+    btn.disabled = true;
+    btn.classList.add('loading');
+
+    // Se EmailJS não estiver configurado, simulamos o envio
+    if (EMAILJS_PUBLIC_KEY === "SEU_PUBLIC_KEY_AQUI" || typeof emailjs === 'undefined') {
+      setTimeout(() => {
+        btn.disabled = false;
+        btn.classList.remove('loading');
+        mostrarSucesso();
+      }, 1800);
+      return;
+    }
+
+    // Enviar alerta ao arquitecto com os dados do requerente
+    const resumo = `
+Nome: ${dados.nome}
+Email: ${dados.email}
+Telefone: ${dados.telefone}
+Morada: ${dados.morada}, ${dados.cp} ${dados.concelho}
+Doc. ID: ${dados.doc_id} (validade: ${dados.doc_validade})
+Morada da obra: ${dados.morada_obra}, ${dados.cp_obra} ${dados.concelho_obra}
+Observações: ${dados.observacoes}
+Data: ${dados.data_submissao}`;
+
+    emailjs.send(EMAILJS_SERVICE_ID, TEMPLATE_ALERTA, {
+      to_email:   MEU_EMAIL,
+      from_name:  dados.nome,
+      from_email: dados.email,
+      resumo:     resumo
+    }).then(() => {
+        console.log('Email enviado com sucesso');
+      }).catch(err => {
+        console.error('Erro EmailJS:', JSON.stringify(err));
+      }).finally(() => {
+        btn.disabled = false;
+        btn.classList.remove('loading');
+        mostrarSucesso();
+      });
+  }
+
+  function mostrarSucesso() {
+    document.getElementById('toast').classList.add('show');
+  }
+
+  function formatarData(iso) {
+    const [y, m, d] = iso.split('-');
+    return `${d}/${m}/${y}`;
+  }
+
+  // Formatar CP automaticamente
+  ['cp', 'cp-obra'].forEach(id => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.addEventListener('input', function() {
+      let v = this.value.replace(/\D/g, '');
+      if (v.length > 4) v = v.slice(0,4) + '-' + v.slice(4,7);
+      this.value = v;
+    });
+  });
+</script>
+</body>
+</html>
