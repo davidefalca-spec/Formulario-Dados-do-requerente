@@ -545,8 +545,8 @@
   // ─────────────────────────────────────────────
   const EMAILJS_PUBLIC_KEY  = "PRtALVDHtaYf8ledu";
   const EMAILJS_SERVICE_ID  = "service_0p1kwx2";
-  const TEMPLATE_CLIENTE    = "template_bgi8ixq";  // email de agradecimento ao cliente
-  const TEMPLATE_ALERTA     = "template_cuyrz48";   // email de alerta para si
+  const TEMPLATE_CLIENTE    = "template_bgi8ixq";  // Template A — agradecimento ao cliente
+  const TEMPLATE_ALERTA     = "";                  // Template B — desactivado
   const MEU_EMAIL           = "arqdavidefalca@gmail.com";
 
   (function() {
@@ -655,14 +655,8 @@ Morada da obra: ${dados.morada_obra}, ${dados.cp_obra} ${dados.concelho_obra}
 Observações: ${dados.observacoes}
 Data: ${dados.data_submissao}`;
 
-    const p2 = emailjs.send(EMAILJS_SERVICE_ID, TEMPLATE_ALERTA, {
-      to_email:   MEU_EMAIL,
-      from_name:  dados.nome,
-      from_email: dados.email,
-      resumo:     resumo
-    });
-
-    Promise.all([p1, p2])
+    // Template B (alerta ao arquitecto) — desactivado
+    Promise.all([p1])
       .then(() => {
         btn.disabled = false;
         btn.classList.remove('loading');
